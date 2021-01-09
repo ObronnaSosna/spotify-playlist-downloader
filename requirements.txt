@@ -1,0 +1,4 @@
+simplejson>=3.16.0
+requests>=2.21.0
+requests-unixsocket>=0.1.5
+youtube-dl>=2021.1.8
