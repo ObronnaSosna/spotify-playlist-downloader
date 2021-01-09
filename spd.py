@@ -111,5 +111,5 @@ for i in data:  # loopt through songs
             + spotify_id
             + ".mp3'"
         )
-    f.write(spotify_id "\n")
+    f.write(spotify_id + "\n")
 f.close()
