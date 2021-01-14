@@ -13,9 +13,11 @@ You need to have youtube-dl and ffmpeg in your PATH
 1. Download this repo
 2. Install [python](https://www.python.org/downloads/)
 3. Download [ffmpeg](https://ffmpeg.org/download.html)
-4. Put ffmpeg.exe in script directory
+4. Download [youtube-dl](http://ytdl-org.github.io/youtube-dl/download.html)
+5. Put ffmpeg.exe and youtube-dl.exe in script directory
 ```
-pip install -r requirements.txt
+py -m pip install -r requirements.txt
+
 ```
 ## USAGE
 ### Linux
