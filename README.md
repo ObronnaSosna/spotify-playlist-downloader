@@ -5,7 +5,7 @@ It's a simple script that scrapes all important metadata from spotify playlist, 
 git clone https://github.com/ObronnaSosna/spotify-playlist-downloader.git
 cd spotify-playlist-downloader
 pip3 install -r requirements.txt
-sudo apt install ffmpeg wget
+sudo apt install ffmpeg
 ```
 You need to have youtube-dl, wget and ffmpeg in your PATH
 ## USAGE

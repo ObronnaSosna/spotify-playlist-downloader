@@ -99,20 +99,20 @@ for i in data:  # loopt through songs
         open("tmp/thumb.jpg", "wb").write(#download thumbnail
             requests.get(thumb, allow_redirects=True).content
         )
-        system(  # embed and encode everything
-            "ffmpeg -i tmp/song* -i tmp/thumb.jpg -map 0:0 -map 1:0 -id3v2_version 3 -y -metadata title='"
+        system(
+            'ffmpeg_script "'
             + title
-            + "' -metadata artist='"
+            + '" "'
             + artist
-            + "' -metadata album='"
+            + '" "'
             + album
-            + "' -b:a 320k '"
+            + '" "'
             + playlist_id
             + "/"
             + title
             + "_"
             + spotify_id
-            + ".mp3'"
+            + '.mp3"'
         )
     f.write(spotify_id + "\n")
 f.close()
