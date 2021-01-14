@@ -1,7 +1,7 @@
 # spotify-playlist-downloader
 It's a simple script that scrapes all important metadata from spotify playlist, downloads it from youtube and embeds metadata and cover art from spotify using ffmpeg without need to add an app to your spotify account.
 ## INSTALL
-###Linux
+### Linux
 ```
 sudo apt install ffmpeg python3 python3-pip git
 git clone https://github.com/ObronnaSosna/spotify-playlist-downloader.git
@@ -9,7 +9,7 @@ cd spotify-playlist-downloader
 pip3 install -r requirements.txt
 ```
 You need to have youtube-dl and ffmpeg in your PATH
-###Windows
+### Windows
 1. Download this repo
 2. Install [python](https://www.python.org/downloads/)
 3. Download [ffmpeg](https://ffmpeg.org/download.html)
@@ -18,11 +18,11 @@ You need to have youtube-dl and ffmpeg in your PATH
 pip install -r requirements.txt
 ```
 ## USAGE
-###Linux
+### Linux
 ```
 python3 spd.py <playlist id>
 ```
-###Windows
+### Windows
 ```
 py spd_win.py <playlist id>
 ```
