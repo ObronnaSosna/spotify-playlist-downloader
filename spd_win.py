@@ -69,6 +69,7 @@ for a in range(0, 5000, 100):
     else:
         break
 
+system("mkdir tmp")
 try:  # try reading .log file create new if does not exist
     f = open(argv[1] + ".log", "r")
     songs_logged = f.read().splitlines()
@@ -94,9 +95,9 @@ for i in data:  # loopt through songs
             + artist
             + " "
             + title
-            + '" -o tmp/song.\%\(ext\)s'
+            + '" -o tmp/song.%(ext)s'
         )
-        open("tmp/thumb.jpg", "wb").write(#download thumbnail
+        open("tmp/thumb.jpg", "wb").write(  # download thumbnail
             requests.get(thumb, allow_redirects=True).content
         )
         system(
