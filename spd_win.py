@@ -90,6 +90,7 @@ for i in data:  # loopt through songs
         artist = i[1].replace("'", "").replace('"', "")
         album = i[2].replace("'", "").replace('"', "")
         thumb = i[11]
+        system('del tmp/*')
         system(  # download song from youtube
             'youtube-dl -x --no-continue "ytsearch1: '
             + artist

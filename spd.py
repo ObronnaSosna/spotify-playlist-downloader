@@ -89,6 +89,7 @@ for i in data:  # loopt through songs
         artist = i[1].replace("'", "").replace('"', "")
         album = i[2].replace("'", "").replace('"', "")
         thumb = i[11]
+        system("rm tmp/*")  # clear tmp
         system(  # download song from youtube
             'youtube-dl -x --no-continue "ytsearch1: '
             + artist
@@ -96,7 +97,7 @@ for i in data:  # loopt through songs
             + title
             + '" -o tmp/song.\%\(ext\)s'
         )
-        open("tmp/thumb.jpg", "wb").write(#download thumbnail
+        open("tmp/thumb.jpg", "wb").write(  # download thumbnail
             requests.get(thumb, allow_redirects=True).content
         )
         system(  # embed and encode everything
