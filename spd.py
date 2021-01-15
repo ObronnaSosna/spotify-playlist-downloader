@@ -4,13 +4,6 @@ import json, requests
 from sys import argv
 from os import system
 
-
-for o, a in opts:
-    if o in ("-o", "--out-dir"):
-        out_dir = a
-    if o in ("-l", "--log-dir"):
-        log_dir = a
-
 playlist_id = argv[1]
 
 # get token as if we were webplayer
