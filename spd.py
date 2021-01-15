@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
 import json, requests
-import argparse
-from sys import argv, exit
+from sys import argv
 from os import system
 
-parser = argparse.ArgumentParser(description='Download spotify playlist from youtube.')
+
+for o, a in opts:
+    if o in ("-o", "--out-dir"):
+        out_dir = a
+    if o in ("-l", "--log-dir"):
+        log_dir = a
 
 playlist_id = argv[1]
 
@@ -72,16 +76,16 @@ for a in range(0, 5000, 100):
     else:
         break
 
-system("mkdir -p " + out_dir + "/" + argv[1])  # try creating download and log directory
-system("mkdir -p " + log_dir)
-
 try:  # try reading .log file create new if does not exist
-    f = open(log_dir + "/" + argv[1] + ".log", "r")
+    f = open(argv[1] + ".log", "r")
     songs_logged = f.read().splitlines()
-    f = open(log_dir + "/" + argv[1] + ".log", "a")
+    f = open(argv[1] + ".log", "a")
 except:
-    f = open(log_dir + "/" + argv[1] + ".log", "a")
+    f = open(argv[1] + ".log", "a")
     songs_logged = []
+    system(
+        "mkdir " + argv[1]
+    )  # try creating download directory if .log file does not exist
 
 for i in data:  # loop through songs
     spotify_id = i[10]
@@ -111,8 +115,6 @@ for i in data:  # loop through songs
             + "' -metadata album='"
             + album
             + "' -b:a 320k '"
-            + out_dir
-            + "/"
             + playlist_id
             + "/"
             + title
