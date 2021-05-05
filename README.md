@@ -31,6 +31,7 @@ py spd.py <playlist id or link>
 It will create directory in your current directory with downloaded files named "playlist id", log file named "playlist id".log and tmp directory.
 On subsequent runs it will download only new songs (not in "playlist id".log)
 ## Options
+```
 -o, --output - set output directory
 -l, --log - set log directory
 --tmp - set tmp directory
@@ -39,6 +40,7 @@ On subsequent runs it will download only new songs (not in "playlist id".log)
 --no-metadata - don't embed metadata
 --dump-json - prints spotify api response after running
 --no-watermark - don't add link to this script in comment
+```
 ## Using with other programs
 You can use this script with shell programs for getting playlist info by running it with --dry-run --dump-json.
 --dump-json without --no-log prints differences between log file and spotify api. 
