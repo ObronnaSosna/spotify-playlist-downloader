@@ -86,7 +86,7 @@ def main():
     )
     args = parser.parse_args()
 
-    if "https://open.spotify.com/playlists/" in args.playlist_id:
+    if "https://open.spotify.com/playlist/" in args.playlist_id:
         playlist_id = args.playlist_id[34:56]
     else:
         playlist_id = args.playlist_id
@@ -108,12 +108,14 @@ def main():
         os.makedirs(tmp_path)
 
     # create output directory if not exist
-    if not dry_run and not os.path.exists(out_path):
-        os.makedirs(out_path)
+    if not dry_run:
+        if not os.path.exists(out_path):
+            os.makedirs(out_path)
 
     # create directory with playlist
-    if not os.path.exists(os.path.join(out_path, playlist_id)):
-        os.makedirs(os.path.join(out_path, playlist_id))
+    if not dry_run:
+        if not os.path.exists(os.path.join(out_path, playlist_id)):
+            os.makedirs(os.path.join(out_path, playlist_id))
 
     if not no_log:
         # create log directory if not exist
@@ -128,23 +130,23 @@ def main():
 
     songs = getPlaylistSongs(playlist_id)
 
-    if not dry_run:
-        # loop through songs
-        for song in songs:
-            spotify_id = song["spotify_id"]
-            # check if not already downloaded
-            if spotify_id not in songs_logged:
-                # assign variables remove symbols that break filepaths
-                title = song["track_name"].replace("'", "").replace('"', "")
-                artist = song["artists_names"].replace("'", "").replace('"', "")
-                album = song["album_name"].replace("'", "").replace('"', "")
-                thumb = song["thumbnail_link"]
-                added_at = song["added_at"]
-                added_by = song["added_by"]
-                explicit = song["explicit"]
-                year = song["release_date"]
-                track_number = song["track_number"]
+    # loop through songs
+    for song in songs:
+        spotify_id = song["spotify_id"]
+        # check if not already downloaded
+        if spotify_id not in songs_logged:
+            # assign variables remove symbols that break filepaths
+            title = song["track_name"].replace("'", "").replace('"', "")
+            artist = song["artists_names"].replace("'", "").replace('"', "")
+            album = song["album_name"].replace("'", "").replace('"', "")
+            thumb = song["thumbnail_link"]
+            added_at = song["added_at"]
+            added_by = song["added_by"]
+            explicit = song["explicit"]
+            year = song["release_date"]
+            track_number = song["track_number"]
 
+            if not dry_run:
                 # windows has diffrent way of escaping strings
                 if os.name == "nt":
                     youtube_dl_options = (
@@ -201,26 +203,24 @@ def main():
                     if not no_watermark:
                         ffmpeg_options += " Downloaded using https://github.com/ObronnaSosna/spotify-playlist-downloader"
 
-                ffmpeg_options += (
-                    " "
-                    + '" -b:a 320k "'
-                    + os.path.join(
-                        out_path, playlist_id, title + "_" + spotify_id + ".mp3"
+                    ffmpeg_options += (
+                        " "
+                        + '" -b:a 320k "'
+                        + os.path.join(
+                            out_path, playlist_id, title + "_" + spotify_id + ".mp3"
+                        )
+                        + '"'
                     )
-                    + '"'
-                )
 
-                print(ffmpeg_options)
                 os.system("ffmpeg " + ffmpeg_options)  # embed and encode everything
-
-                if not no_log:
-                    f.write(spotify_id + "\n")
-
                 os.remove(os.path.join(tmp_path, song_filename))  # clear tmp
                 os.remove(os.path.join(tmp_path, "thumb.jpg"))
 
-        if not no_log:
-            f.close()
+            if not no_log:
+                f.write(spotify_id + "\n")
+
+    if not no_log:
+        f.close()
 
     if no_log and dump_json:
         print(json.dumps(songs))
