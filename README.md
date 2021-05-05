@@ -22,14 +22,27 @@ py -m pip install -r requirements.txt
 ## USAGE
 ### Linux
 ```
-python3 spd.py <playlist id>
+python3 spd.py <playlist id or link>
 ```
 ### Windows
 ```
-py spd_win.py <playlist id>
+py spd.py <playlist id or link>
 ```
 It will create directory in your current directory with downloaded files named "playlist id", log file named "playlist id".log and tmp directory.
 On subsequent runs it will download only new songs (not in "playlist id".log)
+## Options
+-o, --output - set output directory
+-l, --log - set log directory
+--tmp - set tmp directory
+--dry-run - get playlist info and don't download anything
+--no-log - don't use log file (no incremental updates)
+--no-metadata - don't embed metadata
+--dump-json - prints spotify api response after running
+--no-watermark - don't add link to this script in comment
+## Using with other programs
+You can use this script with shell programs for getting playlist info by running it with --dry-run --dump-json.
+--dump-json without --no-log prints differences between log file and spotify api. 
+You can also import this script and use getPlaylistSongs(playlist_id) from python scripts for this.
 ## How to get playlist id
 You can get playlist id from share link in spotify app. Id is everything after playlist/ and before ?si
 For example in:
