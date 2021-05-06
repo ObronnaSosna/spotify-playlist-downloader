@@ -34,24 +34,27 @@ def getPlaylistSongs(playlist_id):
 
         if len(result["items"]) > 0:
             for i in result["items"]:
-                songs.append(
-                    {
-                        "track_name": i["track"]["name"],
-                        "artists_names": " & ".join(
-                            [name["name"] for name in i["track"]["artists"]]
-                        ),
-                        "album_name": i["track"]["album"]["name"],
-                        "duration_min": int(i["track"]["duration_ms"]) / 1000 / 60,
-                        "release_date": i["track"]["album"]["release_date"],
-                        "disc_number": i["track"]["disc_number"],
-                        "track_number": i["track"]["track_number"],
-                        "explicit": i["track"]["explicit"],
-                        "added_by": i["added_by"]["id"],
-                        "added_at": i["added_at"],
-                        "spotify_id": i["track"]["id"],
-                        "thumbnail_link": i["track"]["album"]["images"][0]["url"],
-                    }
-                )
+                try:
+                    songs.append(
+                        {
+                            "track_name": i["track"]["name"],
+                            "artists_names": " & ".join(
+                                [name["name"] for name in i["track"]["artists"]]
+                            ),
+                            "album_name": i["track"]["album"]["name"],
+                            "duration_min": int(i["track"]["duration_ms"]) / 1000 / 60,
+                            "release_date": i["track"]["album"]["release_date"],
+                            "disc_number": i["track"]["disc_number"],
+                            "track_number": i["track"]["track_number"],
+                            "explicit": i["track"]["explicit"],
+                            "added_by": i["added_by"]["id"],
+                            "added_at": i["added_at"],
+                            "spotify_id": i["track"]["id"],
+                            "thumbnail_link": i["track"]["album"]["images"][0]["url"],
+                        }
+                    )
+                except:
+                    pass
         else:
             break
     return songs
@@ -76,6 +79,14 @@ def main():
     )
     parser.add_argument("-l", "--log", nargs="?", default=".", help="log directory")
     parser.add_argument("--no-log", action="store_true", help="don't use log file")
+    parser.add_argument(
+        "--long-filenames",
+        action="store_true",
+        help="filenames with artists names and song titles",
+    )
+    parser.add_argument(
+        "--non-unique-filenames", action="store_true", help="don't append spotify id to filename"
+    )
     parser.add_argument(
         "--no-watermark",
         action="store_true",
@@ -102,6 +113,8 @@ def main():
     no_watermark = args.no_watermark
     dump_json = args.dump_json
     dry_run = args.dry_run
+    long_filenames = args.long_filenames
+    non_unique = args.non_unique
 
     # create tmp directory if not exist
     if not os.path.exists(tmp_path):
@@ -202,19 +215,51 @@ def main():
                     )
                     if not no_watermark:
                         ffmpeg_options += " Downloaded using https://github.com/ObronnaSosna/spotify-playlist-downloader"
+                    ffmpeg_options += '" '
 
-                    ffmpeg_options += (
-                        " "
-                        + '" -b:a 320k "'
-                        + os.path.join(
-                            out_path, playlist_id, title + "_" + spotify_id + ".mp3"
-                        )
-                        + '"'
+                ffmpeg_options += " -b:a 320k "
+
+                if long_filenames:
+                    ffmpeg_options += '"' + os.path.join(
+                        out_path,
+                        playlist_id,
+                        "".join(
+                            [
+                                c
+                                for c in artist + " - " + title
+                                if c.isalpha()
+                                or c.isdigit()
+                                or c == " "
+                                or c == "&"
+                                or c == "-"
+                            ]
+                        ).rstrip(),
                     )
-
+                else:
+                    ffmpeg_options += '"' + os.path.join(
+                        out_path,
+                        playlist_id,
+                        "".join(
+                            [
+                                c
+                                for c in title
+                                if c.isalpha()
+                                or c.isdigit()
+                                or c == " "
+                                or c == "&"
+                                or c == "-"
+                            ]
+                        ).rstrip(),
+                    )
+                if non_unique:
+                    ffmpeg_options += ".mp3" + '"'
+                else:
+                    ffmpeg_options += "_" + spotify_id + ".mp3" + '"'
+                print(ffmpeg_options)
                 os.system("ffmpeg " + ffmpeg_options)  # embed and encode everything
                 os.remove(os.path.join(tmp_path, song_filename))  # clear tmp
-                os.remove(os.path.join(tmp_path, "thumb.jpg"))
+                if not no_metadata:
+                    os.remove(os.path.join(tmp_path, "thumb.jpg"))
 
             if not no_log:
                 f.write(spotify_id + "\n")

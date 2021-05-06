@@ -38,6 +38,8 @@ On subsequent runs it will download only new songs (not in "playlist id".log)
 --dry-run - get playlist info and don't download anything
 --no-log - don't use log file (no incremental updates)
 --no-metadata - don't embed metadata
+--long-filenames - filenames with artists and song title
+--non-unique-filenames - filenames without spotify id
 --dump-json - prints spotify api response after running
 --no-watermark - don't add link to this script in comment
 ```
