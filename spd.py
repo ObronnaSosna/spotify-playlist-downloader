@@ -85,7 +85,9 @@ def main():
         help="filenames with artists names and song titles",
     )
     parser.add_argument(
-        "--non-unique-filenames", action="store_true", help="don't append spotify id to filename"
+        "--non-unique-filenames",
+        action="store_true",
+        help="don't append spotify id to filename",
     )
     parser.add_argument(
         "--no-watermark",
@@ -114,7 +116,7 @@ def main():
     dump_json = args.dump_json
     dry_run = args.dry_run
     long_filenames = args.long_filenames
-    non_unique = args.non_unique
+    non_unique = args.non_unique_filenames
 
     # create tmp directory if not exist
     if not os.path.exists(tmp_path):
