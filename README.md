@@ -53,7 +53,7 @@ You can also import this script and use getPlaylistSongs(playlist_id) from pytho
 You need to set --ffmpeg-path, --youtube-dl-path, --tmp, -o and -l in command that crontab is running.
 Example crontab entry for ubuntu:
 ```
-0 0 * * * /usr/bin/python3 /data/spotify-playlist-downloader/spd.py <playlist id> --o <script path>/spotify-playlist-downloader/ -l <script path>/spotify-playlist-downloader/ --tmp <script path>/spotify-playlist-downloader/tmp/ --ffmpeg-path /usr/bin/ffmpeg --youtube-dl-path /home/<user>/.local/bin/youtube-dl
+0 0 * * * /usr/bin/python3 <script path>/spotify-playlist-downloader/spd.py <playlist id> --o <script path>/spotify-playlist-downloader/ -l <script path>/spotify-playlist-downloader/ --tmp <script path>/spotify-playlist-downloader/tmp/ --ffmpeg-path /usr/bin/ffmpeg --youtube-dl-path /home/<user>/.local/bin/youtube-dl
 ```
 ## How to get playlist id
 You can get playlist id from share link in spotify app. Id is everything after playlist/ and before ?si
