@@ -97,6 +97,12 @@ def main():
     parser.add_argument(
         "--no-metadata", action="store_true", help="no metadata in output files"
     )
+    parser.add_argument(
+        "--ffmpeg-path", nargs="?", default="ffmpeg", help="ffmpeg path"
+    )
+    parser.add_argument(
+        "--youtube-dl-path", nargs="?", default="youtube-dl", help="youtube-dl path"
+    )
     args = parser.parse_args()
 
     if "https://open.spotify.com/playlist/" in args.playlist_id:
@@ -117,6 +123,8 @@ def main():
     dry_run = args.dry_run
     long_filenames = args.long_filenames
     non_unique = args.non_unique_filenames
+    ffmpeg_path = args.ffmpeg_path
+    youtube_dl_path = args.youtube_dl_path
 
     # create tmp directory if not exist
     if not os.path.exists(tmp_path):
@@ -182,7 +190,7 @@ def main():
                         + os.path.join(tmp_path, "song.\%\(ext\)s")
                     )
                 os.system(
-                    "youtube-dl" + youtube_dl_options
+                    youtube_dl_path + youtube_dl_options
                 )  # download song from youtube
 
                 if not no_metadata:
@@ -258,7 +266,7 @@ def main():
                 else:
                     ffmpeg_options += "_" + spotify_id + ".mp3" + '"'
                 print(ffmpeg_options)
-                os.system("ffmpeg " + ffmpeg_options)  # embed and encode everything
+                os.system(ffmpeg_path + ffmpeg_options)  # embed and encode everything
                 os.remove(os.path.join(tmp_path, song_filename))  # clear tmp
                 if not no_metadata:
                     os.remove(os.path.join(tmp_path, "thumb.jpg"))

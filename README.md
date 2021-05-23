@@ -42,6 +42,8 @@ On subsequent runs it will download only new songs (not in "playlist id".log)
 --non-unique-filenames - filenames without spotify id
 --dump-json - prints spotify api response after running
 --no-watermark - don't add link to this script in comment
+--ffmpeg-path - path to ffmpeg
+--youtube-dl-path - path to youtube-dl
 ```
 ## Using with other programs
 You can use this script with shell programs for getting playlist info by running it with --dry-run --dump-json.
