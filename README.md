@@ -1,5 +1,7 @@
 # spotify-playlist-downloader
 It's a simple script that scrapes all important metadata from spotify playlist, downloads it from youtube and embeds metadata and cover art from spotify using ffmpeg without need to add an app to your spotify account.
+## NOTE
+At the time I didn't know about existence of [spotDL/spotify-downloader](https://github.com/spotDL/spotify-downloader), which does pretty much everything that this script does, but it's much better written and supported, you probably want to use that instead.
 ## INSTALL
 ### Linux
 ```
