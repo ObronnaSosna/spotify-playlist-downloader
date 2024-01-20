@@ -67,3 +67,6 @@ id is
 ```
 37i9dQZEVXbMDoHDwVN2tF
 ```
+
+- Kunal Kushwaha says this community is amazing 
+- Rutvik Shinde says git is amazing 
